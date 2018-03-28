@@ -1,0 +1,71 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+.game {
+    height: 80%;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 30px;
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1% 0 1% 0;
+}
+
+.settings {
+    width: 80%;
+    height: 19%;
+    background-color: bisque;
+}
+
+.gameBoard {
+    max-width: 600px;;
+    background-color: blueviolet;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+}
+
+.score {
+    width: 50%;
+    height: 19%;
+    background-color: brown;
+}
+
+.fourOnFour {
+    width: 25%;
+    height: 25%;
+    background-color: burlywood;
+    box-sizing: border-box;
+    border: 1px solid black;
+    font-size: 30px;
+}
+
+.sixOnSix {
+    width: 100px;
+    height: 100px;
+    background-color: burlywood;
+    box-sizing: border-box;
+    border: 1px solid black;
+    font-size: 30px;
+    text-align: center;
+    line-height: 100px;
+}
+
+.eightOnEight {
+    width: 16%;
+    height: 16%;
+    background-color: burlywood;
+    box-sizing: border-box;
+    border: 1px solid black;
+    font-size: 30px;
+}
+
+.hidden {
+    opacity: 0;
+}
