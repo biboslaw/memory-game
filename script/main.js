@@ -19,10 +19,10 @@ function startGame() {
     var pattern = [
         9924,
         9967,
-        119070,
-        119136,
-        120512,
-        10003,
+        9728,
+        9731,
+        9733,
+        9760,
         9730,
         9822,
         9775,
@@ -54,6 +54,7 @@ function startGame() {
         var mainCard = createCards(cardsArray[i], mainCard, i);
         mainCard.addEventListener("click", function (e) {
             compare = compareCards(e, compare);
+            
         });
         gameBoard.appendChild(mainCard);
     }
@@ -65,6 +66,7 @@ function createCards(arrayObj, mainCard, i) {
     var background = document.createElement('div');
     mainCard.classList.add('sixOnSix');
     mainCard.dataset.attr = i;
+    mainCard.setAttribute('id', 'card');
     foreground.classList.add('foreground');
     background.classList.add('background');
     background.innerHTML = arrayObj;
@@ -90,23 +92,24 @@ function compareCards(e, compare) {
     if (compare == "") {
         e.target.classList.add('clicked');
         return compare = e.target.parentElement.querySelector('.background');
-    } else if (compare !== "" && compare.parentElement.dataset == e.target.parentElement.dataset) {
+    } else if (compare.parentElement.dataset == e.target.parentElement.dataset) {
         return compare;
-    } else if (compare !== "" && compare.innerHTML == temp.innerHTML) {
-        console.log(compare.parentElement.dataset)
+    } else if (compare.innerHTML == temp.innerHTML) {
         e.target.classList.add('clicked');
-        setTimeout(hideCards, 1000, compare, e);
+        setTimeout(hideCards, 300, compare, e);
+        ifEnd();
         return compare = "";
-    } else if (compare !== "" && compare.innerHTML !== temp.innerHTML) {
+    } 
         e.target.classList.add('clicked');
-        setTimeout(resetCards, 1000, compare, e);
-        return compare = "";
-    }
+        setTimeout(resetCards, 300, compare, e);
+        return compare = "";    
 };
 
 function hideCards(compare, e) {
     compare.parentElement.classList.add('hidden');
+    compare.parentElement.removeAttribute('id');
     e.target.parentElement.classList.add('hidden');
+    e.target.parentElement.removeAttribute('id');
     compare.nextSibling.classList.remove("clicked");
     e.target.classList.remove("clicked");
 }
@@ -121,4 +124,12 @@ function checkClicked() {
     if (clicked.length == 2) {
         return true;
     } else return false;
+}
+
+function ifEnd () {
+    var ids = document.querySelectorAll('#card')
+    console.log(ids)
+    if (ids.length==0) {
+        alert("Game over");
+    }
 }

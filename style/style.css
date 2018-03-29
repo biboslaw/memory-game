@@ -59,8 +59,8 @@ body, html {
     position: absolute;
     width: 100px;
     height: 100px;
-    transition: all 0.1s ease-in;
-    background-color: red;
+    transition: all 0.05s ease-in;
+    abackground-color: red;
     
 }
 
