@@ -65,8 +65,7 @@ function createCards(arrayObj, mainCard, i) {
     var foreground = document.createElement('div');
     var background = document.createElement('div');
     mainCard.classList.add('sixOnSix');
-    mainCard.dataset.attr = i;
-    mainCard.setAttribute('id', 'card');
+    mainCard.setAttribute('id', i);
     foreground.classList.add('foreground');
     background.classList.add('background');
     background.innerHTML = arrayObj;
@@ -92,12 +91,12 @@ function compareCards(e, compare) {
     if (compare == "") {
         e.target.classList.add('clicked');
         return compare = e.target.parentElement.querySelector('.background');
-    } else if (compare.parentElement.dataset == e.target.parentElement.dataset) {
+    } else if (compare.parentElement.getAttribute('id') == e.target.parentElement.getAttribute('id')) {
         return compare;
     } else if (compare.innerHTML == temp.innerHTML) {
         e.target.classList.add('clicked');
         setTimeout(hideCards, 300, compare, e);
-        ifEnd();
+        
         return compare = "";
     } 
         e.target.classList.add('clicked');
@@ -112,6 +111,7 @@ function hideCards(compare, e) {
     e.target.parentElement.removeAttribute('id');
     compare.nextSibling.classList.remove("clicked");
     e.target.classList.remove("clicked");
+    ifEnd();
 }
 
 function resetCards(compare, e) {
@@ -127,9 +127,21 @@ function checkClicked() {
 }
 
 function ifEnd () {
-    var ids = document.querySelectorAll('#card')
-    console.log(ids)
-    if (ids.length==0) {
-        alert("Game over");
+    var board = document.querySelectorAll('#gameBoard > div');
+    var count = 0;
+    var scoreDiv = document.querySelector("#score");
+    var score = Number(scoreDiv.innerHTML);
+    console.log(score +1 )
+    for (i = 0; i<board.length; i++){
+        if (board[i].getAttribute("id")) {
+            count++;
+        }
     }
+    if (count > 0) {
+        scoreDiv.innerHTML = score + 1;
+    } else if  (count == 0) {
+        scoreDiv.innerHTML = score + 1;
+    }
+    console.log(count)
+    
 }
