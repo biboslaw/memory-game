@@ -16,12 +16,19 @@
                 <option value="hard">hard</option>
             </select>
         </form>
-        <button id="go">Start Game!</button>
+        <button id="go">Play!</button>
+        <div class="rank hidden2">
+            <form action="">
+                <label for="winner">Enter Your name:</label>
+                <input id="winner" name="winner" type="text">
+            </form>
+            <button class="applyBtn">Apply</button>
+        </div>
     </div>
     <div id="game" class="game hidden">
         <div id="gameBoard" class="gameBoard">
         </div>
-        <div id="score" class="score">0</div>
+        <div id="score" class="score">Moves: <span>0</span></div>
         <script src="script/main.js"></script>
     </div>
 </body>

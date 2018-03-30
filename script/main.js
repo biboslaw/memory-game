@@ -1,22 +1,45 @@
 document.addEventListener("DOMContentLoaded", main());
 
 function main() {
+    var ranking = checkStorage();
     var button = document.querySelector('#go');
     button.addEventListener("click", function (e) {
         e.preventDefault();
-        startGame();
+        startGame(ranking);
     });
 }
 
-function startGame() {
+function checkStorage() {
+    var rankTable = [];
+    if (localStorage.length > 0) {
+        var temp;
+        for (var i = 0; localStorage.length; i++) {
+            rankTable.push(localStorage[i]);
+        }
+    } else {
+        rankTable[0] = ['Chandler', 20];
+        rankTable[1] = ['Joey', 24];
+        rankTable[2] = ['Monika', 29];
+        rankTable[3] = ['Ross', 32];
+    }
+    return rankTable
+}
+
+function startGame(ranking) {
     var level = document.querySelector("#level").value;
     var gameBoard = document.querySelector('.gameBoard');
     gameBoard.innerHTML = '';
-    var cards = 24;
-    if (level === 'hard') {
-        cards = 30;
+    var cards = {
+        normal: {
+            cards: 24
+        },
+        hard: {
+            cards: 30
+        }
     }
-    var pattern = [
+    cards = cards[level].cards;
+    console.log(cards);
+    var arrOfDecChars = [
         9924,
         9967,
         9728,
@@ -44,8 +67,8 @@ function startGame() {
     ];
     var cardsArray = [];
     for (var i = 0; i < cards / 2; i++) {
-        cardsArray.push(String.fromCodePoint(pattern[i]));
-        cardsArray.push(String.fromCodePoint(pattern[i]));
+        cardsArray.push(String.fromCodePoint(arrOfDecChars[i]));
+        cardsArray.push(String.fromCodePoint(arrOfDecChars[i]));
     };
     var compare = "";
     var overCick = 0;
@@ -54,9 +77,8 @@ function startGame() {
     shuffleArray(cardsArray);
     for (i = 0; i < cardsArray.length; i++) {
         var mainCard = createCards(cardsArray[i], mainCard, i);
-        mainCard.addEventListener("click", function (e) {
-            compare = compareCards(e, compare);
-            
+        mainCard.addEventListener("click", function (e) {  
+            compare = compareCards(e, compare, ranking);
         });
         gameBoard.appendChild(mainCard);
     }
@@ -86,7 +108,7 @@ function shuffleArray(array) {
     }
 }
 
-function compareCards(e, compare) {
+function compareCards(e, compare, ranking) {
     if (checkClicked()) {
         return "";
     }
@@ -98,28 +120,33 @@ function compareCards(e, compare) {
         return compare;
     } else if (compare.innerHTML == temp.innerHTML) {
         e.target.classList.add('clicked');
-        setTimeout(hideCards, 300, compare, e);
-        
+        setTimeout(hideCards, 300, compare, e, ranking);
         return compare = "";
-    } 
-        e.target.classList.add('clicked');
-        setTimeout(resetCards, 300, compare, e);
-        return compare = "";    
+    }
+    e.target.classList.add('clicked');
+    setTimeout(resetCards, 500, compare, e);
+    return compare = "";
 };
 
-function hideCards(compare, e) {
+function hideCards(compare, e, ranking) {
     compare.parentElement.classList.add('hidden');
     compare.parentElement.removeAttribute('id');
     e.target.parentElement.classList.add('hidden');
     e.target.parentElement.removeAttribute('id');
     compare.nextSibling.classList.remove("clicked");
     e.target.classList.remove("clicked");
-    ifEnd();
+    var scoreDiv = document.querySelector("#score span");
+    var score = Number(scoreDiv.innerHTML);
+    scoreDiv.innerHTML = score + 1;
+    ifEnd(ranking);
 }
 
 function resetCards(compare, e) {
     e.target.classList.remove('clicked');
     compare.parentElement.querySelector(".foreground").classList.remove('clicked');
+    var scoreDiv = document.querySelector("#score span");
+    var score = Number(scoreDiv.innerHTML);
+    scoreDiv.innerHTML = score + 1;
 }
 
 function checkClicked() {
@@ -129,22 +156,45 @@ function checkClicked() {
     } else return false;
 }
 
-function ifEnd () {
+function ifEnd(ranking) {
     var board = document.querySelectorAll('#gameBoard > div');
     var count = 0;
-    var scoreDiv = document.querySelector("#score");
-    var score = Number(scoreDiv.innerHTML);
-    console.log(score +1 )
-    for (i = 0; i<board.length; i++){
+    for (i = 0; i < board.length; i++) {
         if (board[i].getAttribute("id")) {
             count++;
         }
     }
-    if (count > 0) {
-        scoreDiv.innerHTML = score + 1;
-    } else if  (count == 0) {
-        scoreDiv.innerHTML = score + 1;
+    if (count == 0) {
+        var score = document.querySelector("#score span").innerHTML;
+        var modal = document.querySelector("#modal");
+        var applyBtn = document.querySelector(".applyBtn");
+        score = Number(score);
+        modal.classList.remove("hidden2");
+        modal.querySelector(".rank").classList.remove("hidden2");
+        applyBtn.addEventListener("click", function(e){
+            gameEnd(ranking, score);
+        });
+        
     }
-    console.log(count)
-    
+}
+
+function gameEnd(ranking, score) {
+    var name = document.querySelector("#winner").value;
+    var ol = document.createElement("ol");
+    var rank = document.querySelector(".rank");
+    ol.classList.add("rankList");
+    name = [name + ": ", score];
+    ranking.push(name);
+    ranking.sort(function(a,b){
+        return a[1] - b[1];
+    });
+    for (var i = 0; i<ranking.length; i++){
+        var li = document.createElement("li");
+        li.innerHTML = ranking[i];
+        ol.appendChild(li);
+
+    }
+    rank.appendChild(ol);
+    score = document.querySelector("#score span");
+    score.innerHTML = 0;
 }

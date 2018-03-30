@@ -1,6 +1,7 @@
 body, html {
     margin: 0;
     padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 body {
     background-color: #00cec9;
@@ -25,7 +26,7 @@ label {
     transition: all 0.2s linear;
 }
 .game {
-    width: 60%;
+    width: 720px;
     margin: 50px auto 50px auto;
     background-color: white;
     display: flex;
@@ -38,7 +39,7 @@ label {
 }
 
 .gameBoard {
-    max-width: 700px;
+    width: 700px;
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
@@ -63,10 +64,10 @@ label {
     height: 100px;
     margin: 5px;
     background-color: #2d3436;
-    border: 2px solid black;
     text-align: center;
     line-height: 100px;
     transition: all 0.1s ease-in;
+    
 }
 
 .hidden {
@@ -79,6 +80,8 @@ label {
     height: 100px;
     transition: all 0.1s ease-in;
     background-color: #d63031;
+    border: 2px solid black;
+    box-sizing: border-box;
     
 }
 
@@ -95,18 +98,50 @@ label {
 
 .clicked {
     height: 0;
+    border-top: 0;
 }
 
 .hidden2{
     display: none;
 }
 
-@media only screen and (max-width: 600px) {
+.applyBtn {
+    display: block;
+    margin: 0 auto;
+}
+
+.rankList {
+    color: white;
+}
+
+@media only screen and (max-width: 700px) {
     .gameBoard, .game {
-        width: 90%;
+        width: 95%;
     }
-    .sixOnSix, .foreground, .background {
-        width: 50px;
-        height: 50px;
+
+    .game {
+        margin: 5px auto 5px auto;
+    }
+
+    .gameBoard {
+        padding: 0;
+    }
+
+    .background, .sixOnSix, .foreground {
+        width: 80px;
+        height: 80px;
+        font-size: 40px;
+        line-height: 80px;
+    }
+
+    .clicked {
+        height: 70px;
+        opacity: 0;
+    }
+}
+
+@media only screen and (min-width: 945px) and (max-width: 1160px){
+    .gameBoard, .game {
+        width: 500px; 
     }
 }
