@@ -49,6 +49,8 @@ function startGame() {
     };
     var compare = "";
     var overCick = 0;
+    var modal = document.querySelector("#modal");
+    modal.classList.add("hidden2");
     shuffleArray(cardsArray);
     for (i = 0; i < cardsArray.length; i++) {
         var mainCard = createCards(cardsArray[i], mainCard, i);
@@ -58,6 +60,7 @@ function startGame() {
         });
         gameBoard.appendChild(mainCard);
     }
+    gameBoard.parentElement.classList.remove("hidden");
 }
 
 function createCards(arrayObj, mainCard, i) {

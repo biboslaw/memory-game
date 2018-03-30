@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="style/style.css">
     <meta charset="utf-8">
@@ -7,18 +8,17 @@
 </head>
 
 <body>
-    <div id="game" class="game">
-        <div id="settings" class="settings">
-            <form action="">
-                <label for="level">Choose level:</label>
-                <select name="level" id="level">
-                    <option value="normal" selected>normal</option>
-                    <option value="hard">hard</option>
-                </select>
-                <button id="go">Start Game!</button>
-            </form>
-
-        </div>
+    <div id="modal" class="modal">
+        <form action="">
+            <label for="level">Choose level:</label>
+            <select name="level" id="level">
+                <option value="normal" selected>normal</option>
+                <option value="hard">hard</option>
+            </select>
+        </form>
+        <button id="go">Start Game!</button>
+    </div>
+    <div id="game" class="game hidden">
         <div id="gameBoard" class="gameBoard">
         </div>
         <div id="score" class="score">0</div>
