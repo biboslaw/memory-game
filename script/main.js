@@ -221,9 +221,7 @@ function gameEnd(ranking, score) {
     for (i = 0; i<ranking.length; i++){
         finalRanking[ranking[i][0]] = ranking[i][1];
     }
-    console.log(ranking)
-    console.log(finalRanking)
-    localStorage.setItem('lolo', JSON.stringify(finalRanking));
+    localStorage.setItem(finalRanking.level, JSON.stringify(finalRanking));
 }
 
 function objToArr(obj){
