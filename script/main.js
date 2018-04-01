@@ -1,32 +1,51 @@
 document.addEventListener("DOMContentLoaded", main());
 
 function main() {
-    var ranking = checkStorage();
     var button = document.querySelector('#go');
     button.addEventListener("click", function (e) {
         e.preventDefault();
-        startGame(ranking);
+        startGame();
     });
 }
 
-function checkStorage() {
-    var rankTable = [];
-    if (localStorage.length > 0) {
-        var temp;
-        for (var i = 0; localStorage.length; i++) {
-            rankTable.push(localStorage[i]);
-        }
-    } else {
-        rankTable[0] = ['Chandler', 20];
-        rankTable[1] = ['Joey', 24];
-        rankTable[2] = ['Monika', 29];
-        rankTable[3] = ['Ross', 32];
+function checkStorage(level) {
+    var fakeRankTableNormal =  {
+            level: 'normal',
+            'Ross: ': 25,
+            'Monika: ': 30,
+            'Chendler: ': 35,
+            'Joey: ': 150
+        };
+    var fakeRankTableHard = {
+            level: 'hard',
+            'Monika: ': 30,
+            'Chendler: ': 35,
+            'Ross: ': 40,
+            'Joey: ': 150
+       }
+    var rankTable = {};
+    if (localStorage.length !== 0 && level == 'normal' && localStorage.getItem('normal')) {
+        rankTable = localStorage.getItem('normal');
+        return JSON.parse(rankTable);
+    } else if (localStorage.length !== 0 && level == 'hard' && localStorage.getItem('hard')){
+        rankTable = localStorage.getItem('hard');
+        return  JSON.parse(rankTable);
+    } else if (localStorage.length == 0 && level == 'normal'){
+        localStorage.setItem('hard', JSON.stringify(fakeRankTableHard));
+        return fakeRankTableNormal;
     }
-    return rankTable
+    localStorage.setItem('hard', JSON.stringify(fakeRankTableNormal));
+    return fakeRankTableHard;
 }
 
-function startGame(ranking) {
+function startGame() {
+    var olToDelete = document.querySelector(".rankList");
+    if (olToDelete !== null){
+        var rankToRemoveChild = document.querySelector(".rank");
+        rankToRemoveChild.removeChild(olToDelete);
+    }
     var level = document.querySelector("#level").value;
+    var ranking = checkStorage(level);
     var gameBoard = document.querySelector('.gameBoard');
     gameBoard.innerHTML = '';
     var cards = {
@@ -38,7 +57,6 @@ function startGame(ranking) {
         }
     }
     cards = cards[level].cards;
-    console.log(cards);
     var arrOfDecChars = [
         9924,
         9967,
@@ -170,6 +188,7 @@ function ifEnd(ranking) {
         var applyBtn = document.querySelector(".applyBtn");
         score = Number(score);
         modal.classList.remove("hidden2");
+        document.querySelector("#game").classList.add("hidden")
         modal.querySelector(".rank").classList.remove("hidden2");
         applyBtn.addEventListener("click", function(e){
             gameEnd(ranking, score);
@@ -180,21 +199,37 @@ function ifEnd(ranking) {
 
 function gameEnd(ranking, score) {
     var name = document.querySelector("#winner").value;
-    var ol = document.createElement("ol");
+    var ol ="";
+    ol = document.createElement("ol");
     var rank = document.querySelector(".rank");
     ol.classList.add("rankList");
+    ranking = objToArr(ranking);
     name = [name + ": ", score];
     ranking.push(name);
-    ranking.sort(function(a,b){
+    ranking.sort(function (a,b){
         return a[1] - b[1];
     });
-    for (var i = 0; i<ranking.length; i++){
+    for (var i = 1; i<ranking.length; i++){
         var li = document.createElement("li");
         li.innerHTML = ranking[i];
         ol.appendChild(li);
-
     }
     rank.appendChild(ol);
     score = document.querySelector("#score span");
     score.innerHTML = 0;
+    var finalRanking = {};
+    for (i = 0; i<ranking.length; i++){
+        finalRanking[ranking[i][0]] = ranking[i][1];
+    }
+    console.log(ranking)
+    console.log(finalRanking)
+    localStorage.setItem('lolo', JSON.stringify(finalRanking));
 }
+
+function objToArr(obj){
+    var arr = [];
+    for (var key in obj){
+      arr.push([key, obj[key]]);
+    }
+    return arr;
+  }
