@@ -12,20 +12,24 @@
 <body>
     <div id="modal" class="modal">
         <img src="images/memory_logo.svg" alt="">
-        <form action="#">
-            <label for="level">Choose level:</label>
-            <select name="level" id="level">
-                <option value="normal" selected>normal</option>
-                <option value="hard">hard</option>
-            </select>
-        </form>
-        <button id="go">Play!</button>
-        <div class="rank hidden2">
+        <div id="sectionPlay">
             <form action="#">
-                <label for="winner">Enter Your name:</label>
-                <input id="winner" name="winner" type="text" placeholder="Enter Name">
+                <label for="level">Choose level:</label>
+                <select name="level" id="level">
+                    <option value="normal" selected>normal</option>
+                    <option value="hard">hard</option>
+                </select>
             </form>
-            <button id="applyBtn" class="applyBtn">Apply</button>
+            <button id="go" class="go">Play!</button>
+        </div>
+        <div class="rank hidden2">
+            <div id="sectionEnterName">
+                <form action="#">
+                    <label for="winner">Enter Your name:</label>
+                    <input id="winner" name="winner" type="text" placeholder="Enter Name">
+                </form>
+                <button id="applyBtn" class="applyBtn">Apply</button>
+            </div>
         </div>
     </div>
     <div id="game" class="game hidden">

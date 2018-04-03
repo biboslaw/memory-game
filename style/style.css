@@ -52,19 +52,19 @@ button {
     background-color: rgb(250, 250, 250);
     border: 1px solid black;
     width: 130px;
-    height: 30px;;
+    height: 30px;
 }
 
 select {
     background-color: white;
-    width: 150px;
+    width: 130px;
     height: 25px;
     font-size: 0.9em;
 }
 
 input {
     background-color: white;
-    width: 150px;
+    width: 130px;
     height: 25px;
     font-size: 0.9em;
 }
@@ -94,8 +94,8 @@ img {
 }
 
 .game {
-    width: 1040px;
-    margin: 50px auto 50px auto;
+    width: 900px;
+    margin: 30px auto 50px auto;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -107,7 +107,7 @@ img {
 }
 
 .gameBoard {
-    width: 1000px;
+    width: 900px;
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
@@ -129,16 +129,16 @@ img {
 
 .sixOnSix {
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     margin: 5px;
     background-color: #28AFB0;
     text-align: center;
-    line-height: 150px;
+    line-height: 130px;
     transition: all 0.1s ease-in;
     cursor: pointer;
     border-radius: 5px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 
 .hidden {
@@ -148,10 +148,10 @@ img {
 
 .foreground {
     position: absolute;
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     transition: all 0.1s ease-in;
-    abackground-color: #19647E;
+    background-color: #19647E;
     border: 3px solid #37392E;
     box-sizing: border-box;
     transform: translate(0);
@@ -159,8 +159,8 @@ img {
 }
 
 .background {
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     text-align: center;
     position: absolute;
     margin: 0 auto;
@@ -176,9 +176,9 @@ img {
 }
 
 
-.applyBtn {
+.applyBtn, .go {
     display: block;
-    margin: 0 auto;
+    margin: 0 auto; 
 }
 
 .rankList {

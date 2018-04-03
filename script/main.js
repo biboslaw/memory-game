@@ -180,15 +180,14 @@ function ifEnd(ranking) {
         var modal = document.querySelector("#modal");
         var applyBtn = document.querySelector(".applyBtn");
         var input = document.getElementById("winner");
-        modal.querySelector("#go").classList.add("hidden2");
-        applyBtn.classList.remove("hidden2");
-        applyBtn.parentElement.classList.remove("hidden2");
+        modal.querySelector("#sectionPlay").classList.add("hidden2");
+        modal.querySelector("#sectionEnterName").classList.remove("hidden2");
         score = Number(score);
         modal.classList.remove("hidden2");
         document.querySelector("#game").classList.add("hidden")
         modal.querySelector(".rank").classList.remove("hidden2");
         applyBtn.addEventListener("click", function (e) {
-            e.target.classList.add("hidden2");
+            e.target.parentElement.classList.add("hidden2");
             gameEnd(ranking, score, e, modal);
         });
         input.addEventListener("keyup", function (event) {
@@ -200,11 +199,12 @@ function ifEnd(ranking) {
     }
 }
 
-function gameEnd(ranking, score, e) {
+function gameEnd(ranking, score, e, modal) {
     var tableToDelete = document.querySelector("table");
     var rank = document.querySelector(".rank");
     var name = document.querySelector("#winner").value;
-    modal.querySelector("#go").classList.remove("hidden2");
+    modal.querySelector("#sectionPlay").classList.remove("hidden2");
+    modal.querySelector(".rank").classList.remove("hidden2");
     if (tableToDelete !== null) {
         rank.removeChild(tableToDelete);
     }
