@@ -181,6 +181,7 @@ function ifEnd(ranking) {
         var applyBtn = document.querySelector(".applyBtn");
         var input = document.getElementById("winner");
         modal.querySelector("#go").classList.add("hidden2");
+        applyBtn.classList.remove("hidden2");
         applyBtn.parentElement.classList.remove("hidden2");
         score = Number(score);
         modal.classList.remove("hidden2");
