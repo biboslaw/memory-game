@@ -191,7 +191,6 @@ function ifEnd(ranking) {
             gameEnd(ranking, score, e, modal);
         });
         input.addEventListener("keyup", function (event) {
-            console.log("weszło")
             event.preventDefault();
             if (event.keyCode === 13) {
                 document.getElementById("applyBtn").click();
