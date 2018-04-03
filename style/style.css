@@ -94,7 +94,7 @@ img {
 }
 
 .game {
-    width: 900px;
+    width: 920px;
     margin: 30px auto 50px auto;
     background-color: white;
     display: flex;
@@ -107,7 +107,7 @@ img {
 }
 
 .gameBoard {
-    width: 900px;
+    width: 920px;
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
@@ -117,7 +117,7 @@ img {
 }
 
 .score {
-    width: 20%;
+    width: 25%;
     height: 19%;
     margin: 1% auto;
     padding: 5px;
@@ -127,18 +127,30 @@ img {
     font-family: ubuntu;
 }
 
+.score2 {
+    width: 25%;
+    padding: 5px;
+    margin: 0 auto 2% auto;
+    text-align: center;
+    background-color: white;
+    border: 1px solid black;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #19647E;
+}
+
+.go, .score, .score2, .applyBtn, select input {
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
 .sixOnSix {
     position: relative;
     width: 130px;
     height: 130px;
     margin: 5px;
-    background-color: #28AFB0;
-    text-align: center;
+   text-align: center;
     line-height: 130px;
-    transition: all 0.1s ease-in;
-    cursor: pointer;
-    border-radius: 5px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    transition: all 0.1s ease-in;    
 }
 
 .hidden {
@@ -156,6 +168,7 @@ img {
     box-sizing: border-box;
     transform: translate(0);
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .background {
@@ -168,6 +181,10 @@ img {
     font-size: 50px;
     color: #EEE5E5;
     border-radius: 5px;
+    background-color: #28AFB0;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    transition: all 0.1s ease-in;
 }
 
 .clicked {
@@ -193,13 +210,13 @@ img {
     display: none;
 }
 
+.highlighted {
+    background-color: white !important; 
+    color: black;
+    font: 600;
+}
 
-
-@media only screen and (max-width: 700px) {
-    .gameBoard, .game {
-        width: 95%;
-    }
-
+@media only screen and (max-width: 374px) {
     .game {
         margin: 5px auto 5px auto;
     }
@@ -209,14 +226,10 @@ img {
     }
 
     .background, .sixOnSix, .foreground {
-        width: 80px;
-        height: 80px;
-        font-size: 40px;
-        line-height: 80px;
-    }
-
-    .clicked {
-        height: 80px;
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+        line-height: 50px;
     }
 
     img {
@@ -226,8 +239,25 @@ img {
     }
 }
 
-@media only screen and (min-width: 701px) and (max-width: 1160px){
-    .gameBoard, .game {
-        width: 500px; 
+@media only screen and (min-width: 375px) and (max-width: 750px){
+    .background, .sixOnSix, .foreground {
+        width: 70px;
+        height: 70px;
+        font-size: 25px;
+        line-height: 70px;
     }
+
+    img {
+        margin-top: 10px;
+        width: 250px;
+        height: auto;
+    }
+}
+
+@media only screen and (max-width: 1024px){
+    .gameBoard, .game {
+        width: 90%; 
+    }
+
+    
 }
