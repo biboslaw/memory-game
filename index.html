@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <link rel="stylesheet" href="style/fontawesome-all.css">
-    <link rel="stylesheet" href="style/style.css">
+    <title>Memory game</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style/fontawesome-all.css">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
     <div id="modal" class="modal">
         <img src="images/memory_logo.svg" alt="">
-        <form action="">
+        <form action="#">
             <label for="level">Choose level:</label>
             <select name="level" id="level">
                 <option value="normal" selected>normal</option>
@@ -20,9 +21,9 @@
         </form>
         <button id="go">Play!</button>
         <div class="rank hidden2">
-            <form action="">
+            <form action="#">
                 <label for="winner">Enter Your name:</label>
-                <input id="winner" name="winner" type="text">
+                <input id="winner" name="winner" type="text" placeholder="Enter Name">
             </form>
             <button id="applyBtn" class="applyBtn">Apply</button>
         </div>
