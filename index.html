@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="style/fontawesome-all.css">
     <link rel="stylesheet" href="style/style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,7 @@
 
 <body>
     <div id="modal" class="modal">
+        <img src="images/memory_logo.svg" alt="">
         <form action="">
             <label for="level">Choose level:</label>
             <select name="level" id="level">
@@ -22,13 +24,16 @@
                 <label for="winner">Enter Your name:</label>
                 <input id="winner" name="winner" type="text">
             </form>
-            <button class="applyBtn">Apply</button>
+            <button id="applyBtn" class="applyBtn">Apply</button>
         </div>
     </div>
     <div id="game" class="game hidden">
+        <img src="images/memory_logo.svg" alt="">
         <div id="gameBoard" class="gameBoard">
         </div>
-        <div id="score" class="score">Moves: <span>0</span></div>
+        <div id="score" class="score">Moves:
+            <span>0</span>
+        </div>
         <script src="script/main.js"></script>
     </div>
 </body>

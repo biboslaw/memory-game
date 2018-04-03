@@ -9,28 +9,28 @@ function main() {
 }
 
 function checkStorage(level) {
-    var fakeRankTableNormal =  {
-            level: 'normal',
-            'Ross: ': 25,
-            'Monika: ': 30,
-            'Chendler: ': 35,
-            'Joey: ': 150
-        };
+    var fakeRankTableNormal = {
+        level: 'normal',
+        'Ross: ': 25,
+        'Monika: ': 30,
+        'Chendler: ': 35,
+        'Joey: ': 150
+    };
     var fakeRankTableHard = {
-            level: 'hard',
-            'Monika: ': 30,
-            'Chendler: ': 35,
-            'Ross: ': 40,
-            'Joey: ': 150
-       }
+        level: 'hard',
+        'Monika: ': 30,
+        'Chendler: ': 35,
+        'Ross: ': 40,
+        'Joey: ': 150
+    }
     var rankTable = {};
     if (localStorage.length !== 0 && level == 'normal' && localStorage.getItem('normal')) {
         rankTable = localStorage.getItem('normal');
         return JSON.parse(rankTable);
-    } else if (localStorage.length !== 0 && level == 'hard' && localStorage.getItem('hard')){
+    } else if (localStorage.length !== 0 && level == 'hard' && localStorage.getItem('hard')) {
         rankTable = localStorage.getItem('hard');
-        return  JSON.parse(rankTable);
-    } else if (localStorage.length == 0 && level == 'normal'){
+        return JSON.parse(rankTable);
+    } else if (localStorage.length == 0 && level == 'normal') {
         localStorage.setItem('hard', JSON.stringify(fakeRankTableHard));
         return fakeRankTableNormal;
     }
@@ -39,11 +39,6 @@ function checkStorage(level) {
 }
 
 function startGame() {
-    var olToDelete = document.querySelector(".rankList");
-    if (olToDelete !== null){
-        var rankToRemoveChild = document.querySelector(".rank");
-        rankToRemoveChild.removeChild(olToDelete);
-    }
     var level = document.querySelector("#level").value;
     var ranking = checkStorage(level);
     var gameBoard = document.querySelector('.gameBoard');
@@ -57,45 +52,41 @@ function startGame() {
         }
     }
     cards = cards[level].cards;
-    var arrOfDecChars = [
-        9924,
-        9967,
-        9728,
-        9731,
-        9733,
-        9760,
-        9730,
-        9822,
-        9775,
-        9762,
-        9742,
-        10052,
-        3106,
-        5844,
-        9829,
-        9200,
-        8984,
-        9738,
-        9742,
-        9749,
-        9774,
-        9775,
-        9889,
-        9928
+    var fontAwesomeArr = [
+        "far fa-bell",
+        "fas fa-bath",
+        "fas fa-beer",
+        "fas fa-birthday-cake",
+        "fas fa-bus",
+        "fas fa-chess-rook",
+        "fas fa-couch",
+        "fas fa-dove",
+        "fas fa-fighter-jet",
+        "fas fa-gift",
+        "far fa-hand-point-right",
+        "fab fa-hotjar",
+        "fab fa-itunes-note",
+        "fas fa-heart",
+        "fas fa-leaf",
+        "far fa-lightbulb",
+        "fas fa-motorcycle",
+        "fas fa-paw",
+        "fas fa-puzzle-piece",
+        "fab fa-reddit-alien"
     ];
     var cardsArray = [];
+    shuffleArray(fontAwesomeArr);
     for (var i = 0; i < cards / 2; i++) {
-        cardsArray.push(String.fromCodePoint(arrOfDecChars[i]));
-        cardsArray.push(String.fromCodePoint(arrOfDecChars[i]));
+        cardsArray.push(fontAwesomeArr[i]);
+        cardsArray.push(fontAwesomeArr[i]);
     };
     var compare = "";
-    var overCick = 0;
     var modal = document.querySelector("#modal");
     modal.classList.add("hidden2");
     shuffleArray(cardsArray);
     for (i = 0; i < cardsArray.length; i++) {
         var mainCard = createCards(cardsArray[i], mainCard, i);
-        mainCard.addEventListener("click", function (e) {  
+        mainCard.addEventListener("click", function (e) {
             compare = compareCards(e, compare, ranking);
         });
         gameBoard.appendChild(mainCard);
@@ -107,11 +98,13 @@ function createCards(arrayObj, mainCard, i) {
     mainCard = document.createElement('div');
     var foreground = document.createElement('div');
     var background = document.createElement('div');
+    var faIcon = document.createElement("i")
     mainCard.classList.add('sixOnSix');
     mainCard.setAttribute('id', i);
     foreground.classList.add('foreground');
     background.classList.add('background');
-    background.innerHTML = arrayObj;
+    faIcon.setAttribute("class", arrayObj);
+    background.appendChild(faIcon);
     mainCard.appendChild(background)
     mainCard.appendChild(foreground);
     return mainCard;
@@ -142,9 +135,9 @@ function compareCards(e, compare, ranking) {
         return compare = "";
     }
     e.target.classList.add('clicked');
-    setTimeout(resetCards, 500, compare, e);
+    setTimeout(resetCards, 700, compare, e);
     return compare = "";
-};
+}
 
 function hideCards(compare, e, ranking) {
     compare.parentElement.classList.add('hidden');
@@ -186,48 +179,80 @@ function ifEnd(ranking) {
         var score = document.querySelector("#score span").innerHTML;
         var modal = document.querySelector("#modal");
         var applyBtn = document.querySelector(".applyBtn");
+        var input = document.getElementById("winner");
+        modal.querySelector("#go").classList.add("hidden2");
+        applyBtn.parentElement.classList.remove("hidden2");
         score = Number(score);
         modal.classList.remove("hidden2");
         document.querySelector("#game").classList.add("hidden")
         modal.querySelector(".rank").classList.remove("hidden2");
-        applyBtn.addEventListener("click", function(e){
-            gameEnd(ranking, score);
+        applyBtn.addEventListener("click", function (e) {
+            e.target.classList.add("hidden2");
+            gameEnd(ranking, score, e, modal);
         });
-        
+        input.addEventListener("keyup", function (event) {
+            console.log("weszło")
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById("applyBtn").click();
+            }
+        });
     }
 }
 
-function gameEnd(ranking, score) {
-    var name = document.querySelector("#winner").value;
-    var ol ="";
-    ol = document.createElement("ol");
+function gameEnd(ranking, score, e) {
+    var tableToDelete = document.querySelector("table");
     var rank = document.querySelector(".rank");
-    ol.classList.add("rankList");
+    var name = document.querySelector("#winner").value;
+    modal.querySelector("#go").classList.remove("hidden2");
+    if (tableToDelete !== null) {
+        rank.removeChild(tableToDelete);
+    }
     ranking = objToArr(ranking);
     name = [name + ": ", score];
     ranking.push(name);
-    ranking.sort(function (a,b){
+    ranking.sort(function (a, b) {
         return a[1] - b[1];
     });
-    for (var i = 1; i<ranking.length; i++){
-        var li = document.createElement("li");
-        li.innerHTML = ranking[i];
-        ol.appendChild(li);
-    }
-    rank.appendChild(ol);
+    createTable(ranking, rank);
     score = document.querySelector("#score span");
     score.innerHTML = 0;
     var finalRanking = {};
-    for (i = 0; i<ranking.length; i++){
+    for (i = 0; i < ranking.length; i++) {
         finalRanking[ranking[i][0]] = ranking[i][1];
     }
     localStorage.setItem(finalRanking.level, JSON.stringify(finalRanking));
 }
 
-function objToArr(obj){
+function createTable(ranking, rank) {
+    var table = document.createElement("table");
+    var th = document.createElement("thead");
+    var thName = document.createElement("th");
+    var thScore = document.createElement("th");
+    thName.innerHTML = "Player";
+    thName.classList.add("headName");
+    thName.setAttribute("scope", "col");
+    thScore.innerHTML = "Score";
+    thScore.classList.add("headScore");
+    thScore.setAttribute("scope", "col");
+    th.appendChild(thName);
+    th.appendChild(thScore);
+    table.appendChild(th);
+    table.classList.add("rankList");
+    for (var i = 1; i < ranking.length; i++) {
+        var newRow = table.insertRow(-1);
+        var nameCell = newRow.insertCell(0);
+        var scoreCell = newRow.insertCell(1);
+        nameCell.innerHTML = ranking[i][0];
+        scoreCell.innerHTML = ranking[i][1];
+    }
+    rank.appendChild(table);
+}
+
+function objToArr(obj) {
     var arr = [];
-    for (var key in obj){
-      arr.push([key, obj[key]]);
+    for (var key in obj) {
+        arr.push([key, obj[key]]);
     }
     return arr;
-  }
+}

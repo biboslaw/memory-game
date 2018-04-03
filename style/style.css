@@ -1,14 +1,77 @@
+@font-face {
+    font-family: ubuntu;
+    src: url(../fonts/Ubuntu-Bold.ttf);
+}
+
 body, html {
     margin: 0;
     padding: 0;
-    
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
 }
 body {
-    background-color: #00cec9;
+    background-color: #DDCECD;
 }
 
 label {
     color: white;
+}
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid white;
+    align-self: stretch;
+    width: 315px;
+}
+
+td, th {
+    padding: 5px;
+}
+
+tbody td:nth-child(2){
+    text-align: center;
+}
+
+
+table thead th:nth-child(1){
+    width: 70%;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+button {
+    font-size: 0.9em;
+    font-weight: 600;
+    background-color: rgb(250, 250, 250);
+    border: 1px solid black;
+    width: 130px;
+    height: 30px;;
+}
+
+select {
+    background-color: white;
+    width: 150px;
+    height: 25px;
+    font-size: 0.9em;
+}
+
+input {
+    background-color: white;
+    width: 150px;
+    height: 25px;
+    font-size: 0.9em;
+}
+
+img {
+    padding-bottom: 30px;
+    display: block;
 }
 
 .modal {
@@ -21,12 +84,17 @@ label {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: 1;
     transition: all 0.2s linear;
 }
+
+.modal * {
+    margin: 5px;
+}
+
 .game {
-    width: 720px;
+    width: 1040px;
     margin: 50px auto 50px auto;
     background-color: white;
     display: flex;
@@ -39,7 +107,7 @@ label {
 }
 
 .gameBoard {
-    width: 700px;
+    width: 1000px;
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
@@ -54,56 +122,59 @@ label {
     margin: 1% auto;
     padding: 5px;
     text-align: center;
-    background-color: #dfe6e9;
+    background-color: #EEE5E5;
     border: 2px solid black;
+    font-family: ubuntu;
 }
 
 .sixOnSix {
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     margin: 5px;
-    background-color: #2d3436;
+    background-color: #28AFB0;
     text-align: center;
-    line-height: 100px;
+    line-height: 150px;
     transition: all 0.1s ease-in;
-    
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
 .hidden {
     opacity: 0;
+    cursor: default;
 }
 
 .foreground {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     transition: all 0.1s ease-in;
-    abackground-color: #d63031;
-    border: 2px solid black;
+    background-color: #19647E;
+    border: 3px solid #37392E;
     box-sizing: border-box;
-    
+    transform: translate(0);
+    border-radius: 5px;
 }
 
 .background {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     text-align: center;
     position: absolute;
     margin: 0 auto;
     display: block;
     font-size: 50px;
-    color: white;
+    color: #EEE5E5;
+    border-radius: 5px;
 }
 
 .clicked {
-    height: 0;
-    border-top: 0;
+    opacity: 0;
+    border: 0;
 }
 
-.hidden2{
-    display: none;
-}
 
 .applyBtn {
     display: block;
@@ -112,7 +183,17 @@ label {
 
 .rankList {
     color: white;
+    align-self: stretch;
 }
+.headScore {
+    text-align: center;
+}
+
+.hidden2{
+    display: none;
+}
+
+
 
 @media only screen and (max-width: 700px) {
     .gameBoard, .game {
@@ -135,12 +216,17 @@ label {
     }
 
     .clicked {
-        height: 70px;
-        opacity: 0;
+        height: 80px;
+    }
+
+    img {
+        margin-top: 10px;
+        width: 250px;
+        height: auto;
     }
 }
 
-@media only screen and (min-width: 945px) and (max-width: 1160px){
+@media only screen and (min-width: 701px) and (max-width: 1160px){
     .gameBoard, .game {
         width: 500px; 
     }
