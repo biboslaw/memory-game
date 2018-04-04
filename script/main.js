@@ -21,18 +21,31 @@ var fontAwesomeArr = [
     "fab fa-reddit-alien"
 ];
 var compare = false;
+var theme = false;
 
 document.addEventListener("DOMContentLoaded", main());
 
 function main() {
+    checkStorage();
+    var ranking;
+    var switchBtn = document.querySelector(".switch");
+    switchBtn.addEventListener("change", switchColors)
     var button = document.querySelector('#go');
     button.addEventListener("click", function (e) {
         e.preventDefault();
-        startGame();
+        startGame(ranking);
     });
 }
 
-function checkStorage(level) {
+function switchColors() {
+    var body = document.querySelector("body");
+    var modal = document.querySelector(".modal");
+    body.classList.toggle("dark");
+    modal.classList.toggle("dark");
+    return theme = true;
+}
+
+function checkStorage() {
     var fakeRankTableNormal = {
         level: 'normal',
         'Ross': 25,
@@ -46,25 +59,17 @@ function checkStorage(level) {
         'Chendler': 35,
         'Ross': 40,
         'Joey': 150
-    }
-    var rankTable = {};
-    if (localStorage.length !== 0 && level == 'normal' && localStorage.getItem(level)) {
-        rankTable = localStorage.getItem(level);
-        return JSON.parse(rankTable);
-    } else if (localStorage.length !== 0 && level == 'hard' && localStorage.getItem(level)) {
-        rankTable = localStorage.getItem(level);
-        return JSON.parse(rankTable);
-    } else if (localStorage.length == 0 && level == 'normal') {
-        localStorage.setItem('hard', JSON.stringify(fakeRankTableHard));
-        return fakeRankTableNormal;
-    }
-    localStorage.setItem('hard', JSON.stringify(fakeRankTableNormal));
-    return fakeRankTableHard;
+    };
+    if (!localStorage.getItem("hard")) {
+        localStorage.setItem("hard", JSON.stringify(fakeRankTableHard));
+    };
+    if (!localStorage.getItem("normal")) {
+        localStorage.setItem("normal", JSON.stringify(fakeRankTableNormal));
+    };
 }
 
-function startGame() {
+function startGame(ranking) {
     var level = document.querySelector("#level").value;
-    var ranking = checkStorage(level);
     var gameBoard = document.querySelector('.gameBoard');
     var modal = document.querySelector("#modal");
     var cardsArray = [];
@@ -75,17 +80,28 @@ function startGame() {
         hard: {
             cards: 30
         }
-    }
+    };
+    ranking = JSON.parse(localStorage.getItem(level));
     gameBoard.innerHTML = '';
     cards = cards[level].cards;
     shuffleArray(fontAwesomeArr);
     cardsArray = fontAwesomeArr.slice(1, cards / 2 + 1).concat(fontAwesomeArr.slice(1, cards / 2 + 1));
-    
+
     modal.classList.add("hidden2");
     shuffleArray(cardsArray);
     for (i = 0; i < cardsArray.length; i++) {
         var mainCard = createCards(cardsArray[i], mainCard, i, ranking);
         gameBoard.appendChild(mainCard);
+    }
+    if (theme) {
+        var foreground = document.querySelectorAll(".foreground");
+        var background = document.querySelectorAll(".background");
+        var game = document.querySelector("#game");
+        game.classList.toggle("dark");
+        for (var i = 0; i < foreground.length; i++) {
+            background[i].classList.toggle("dark");
+            foreground[i].classList.toggle("dark");
+        }
     }
     gameBoard.parentElement.classList.remove("hidden");
 }
@@ -126,9 +142,7 @@ function hideCards(compare, ranking) {
 
 function checkClicked() {
     var clicked = document.querySelectorAll(".clicked")
-    if (clicked.length == 2) {
-        return true;
-    } else return false;
+    return clicked.length == 2;
 }
 
 function createCards(faIconClass, mainCard, i, ranking) {
@@ -194,7 +208,7 @@ function gameEnd(ranking, score, e, modal) {
     var finalRanking = {};
     modal.querySelector("#sectionPlay").classList.remove("hidden2");
     modal.querySelector(".rank").classList.remove("hidden2");
-    if (tableToDelete !== null) {
+    if (tableToDelete) {
         rank.removeChild(tableToDelete);
     }
     ranking = objToArr(ranking);
