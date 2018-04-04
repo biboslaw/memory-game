@@ -21,7 +21,6 @@ var fontAwesomeArr = [
     "fab fa-reddit-alien"
 ];
 var compare = false;
-var clickedCard;
 
 document.addEventListener("DOMContentLoaded", main());
 
@@ -36,17 +35,17 @@ function main() {
 function checkStorage(level) {
     var fakeRankTableNormal = {
         level: 'normal',
-        'Ross: ': 25,
-        'Monika: ': 30,
-        'Chendler: ': 35,
-        'Joey: ': 150
+        'Ross': 25,
+        'Monika': 30,
+        'Chendler': 35,
+        'Joey': 150
     };
     var fakeRankTableHard = {
         level: 'hard',
-        'Monika: ': 30,
-        'Chendler: ': 35,
-        'Ross: ': 40,
-        'Joey: ': 150
+        'Monika': 30,
+        'Chendler': 35,
+        'Ross': 40,
+        'Joey': 150
     }
     var rankTable = {};
     if (localStorage.length !== 0 && level == 'normal' && localStorage.getItem(level)) {
@@ -67,7 +66,8 @@ function startGame() {
     var level = document.querySelector("#level").value;
     var ranking = checkStorage(level);
     var gameBoard = document.querySelector('.gameBoard');
-    gameBoard.innerHTML = '';
+    var modal = document.querySelector("#modal");
+    var cardsArray = [];
     var cards = {
         normal: {
             cards: 24
@@ -76,11 +76,11 @@ function startGame() {
             cards: 30
         }
     }
+    gameBoard.innerHTML = '';
     cards = cards[level].cards;
-    var cardsArray = [];
     shuffleArray(fontAwesomeArr);
     cardsArray = fontAwesomeArr.slice(1, cards / 2 + 1).concat(fontAwesomeArr.slice(1, cards / 2 + 1));
-    var modal = document.querySelector("#modal");
+    
     modal.classList.add("hidden2");
     shuffleArray(cardsArray);
     for (i = 0; i < cardsArray.length; i++) {
@@ -98,7 +98,7 @@ function compareCards(e, ranking) {
     } else if (clickedCards.length == 1) {
         e.target.classList.add("clicked");
         compare = clickedCards[0].parentElement.querySelector('.background').innerHTML == e.target.parentElement.querySelector('.background').innerHTML;
-        setTimeout(hideCards, 500, compare, ranking);
+        setTimeout(hideCards, 700, compare, ranking);
     }
     return;
 }
@@ -132,10 +132,10 @@ function checkClicked() {
 }
 
 function createCards(faIconClass, mainCard, i, ranking) {
-    mainCard = document.createElement('div');
     var foreground = document.createElement('div');
     var background = document.createElement('div');
-    var faIcon = document.createElement("i")
+    var faIcon = document.createElement("i");
+    mainCard = document.createElement('div');
     mainCard.classList.add('sixOnSix');
     mainCard.setAttribute('id', i);
     foreground.classList.add('foreground');
@@ -160,16 +160,7 @@ function shuffleArray(array) {
     }
 }
 
-function resetCards(compare, e) {
-    e.target.classList.remove('clicked');
-    compare.parentElement.querySelector(".foreground").classList.remove('clicked');
-    var scoreDiv = document.querySelector("#score span");
-    var score = Number(scoreDiv.innerHTML);
-    scoreDiv.innerHTML = score + 1;
-}
-
 function ifEnd(ranking) {
-    console.log("weszlo")
     var board = document.querySelectorAll('#gameBoard > div');
     var count = 0;
     for (i = 0; i < board.length; i++) {
@@ -200,13 +191,14 @@ function gameEnd(ranking, score, e, modal) {
     var tableToDelete = document.querySelector("table");
     var rank = document.querySelector(".rank");
     var name = document.querySelector("#winner").value;
+    var finalRanking = {};
     modal.querySelector("#sectionPlay").classList.remove("hidden2");
     modal.querySelector(".rank").classList.remove("hidden2");
     if (tableToDelete !== null) {
         rank.removeChild(tableToDelete);
     }
     ranking = objToArr(ranking);
-    name = [name + ": ", score];
+    name = [name, score];
     ranking.push(name);
     ranking.sort(function (a, b) {
         return a[1] - b[1];
@@ -214,7 +206,6 @@ function gameEnd(ranking, score, e, modal) {
     createTable(ranking, rank, name);
     score = document.querySelector("#score span");
     score.innerHTML = 0;
-    var finalRanking = {};
     for (i = 0; i < ranking.length; i++) {
         finalRanking[ranking[i][0]] = ranking[i][1];
     }
