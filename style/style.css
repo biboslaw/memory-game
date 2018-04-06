@@ -133,17 +133,13 @@ img {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.6);
 }
 
-
-
 .gameBoard {
-    
     padding: 5px;
     display: grid;
     grid-template-columns: auto auto auto auto;
     justify-content: space-around;
     
 }
-
 
 .score {
     width: 35%;
@@ -380,7 +376,6 @@ img {
 
 @media only screen and (min-width: 901px){
     .game {
-        margin-top: 20px;
         width: 65%;
     }
 
