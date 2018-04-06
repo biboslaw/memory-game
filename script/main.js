@@ -78,7 +78,7 @@ function startGame(ranking) {
             cards: 24
         },
         hard: {
-            cards: 30
+            cards: 32
         }
     };
     ranking = JSON.parse(localStorage.getItem(level));
@@ -86,12 +86,14 @@ function startGame(ranking) {
     cards = cards[level].cards;
     shuffleArray(fontAwesomeArr);
     cardsArray = fontAwesomeArr.slice(1, cards / 2 + 1).concat(fontAwesomeArr.slice(1, cards / 2 + 1));
-
     modal.classList.add("hidden2");
     shuffleArray(cardsArray);
     for (i = 0; i < cardsArray.length; i++) {
         var mainCard = createCards(cardsArray[i], mainCard, i, ranking);
-        gameBoard.appendChild(mainCard);
+        var container = document.createElement("div");
+        container.classList.add("container");
+        container.appendChild(mainCard)
+        gameBoard.appendChild(container);
     }
     if (theme) {
         var foreground = document.querySelectorAll(".foreground");
@@ -175,7 +177,7 @@ function shuffleArray(array) {
 }
 
 function ifEnd(ranking) {
-    var board = document.querySelectorAll('#gameBoard > div');
+    var board = document.querySelectorAll('.container > div');
     var count = 0;
     for (i = 0; i < board.length; i++) {
         if (board[i].getAttribute("id")) {
