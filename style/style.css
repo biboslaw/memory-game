@@ -397,7 +397,7 @@ img {
     }
 }
 
-@media only screen and (min-width: 801px) and (max-width: 1150px) and (orientation: landscape){
+@media only screen and (min-width: 801px) and (max-width: 1190px) and (orientation: landscape){
     .game {
         width: 90%;
     }
@@ -419,7 +419,7 @@ img {
 
 @media only screen and (min-width: 1151px) and (orientation: landscape){
     .game {
-        width: 95%;
+        width: 97%;
     }
     .gameBoard {
         grid-template-columns: auto auto auto auto auto auto auto auto;
