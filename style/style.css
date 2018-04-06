@@ -437,7 +437,7 @@ img {
     }
 }
 
-@media only screen and (min-width: 1400px){
+@media only screen and (min-width: 1500px){
     .game {
         width: 70%;
     }
